@@ -1,0 +1,53 @@
+using System;
+
+namespace mass
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // задання розмірів та ініціалізація масиву
+            int size = 5;
+            int[] arr1 = new int[size];
+            arr1[0] = 1;
+            arr1[1] = 2;
+            arr1[2] = 3;
+            arr1[3] = 4;
+            arr1[4] = 5;
+            // вивід масиву на екран
+            for (int i = 0; i < size; i++)
+            {
+                Console.Write($"{arr1[i]} \t");
+            }
+            // знаходження суми елементів масиву
+            int sum = 0;
+            for (int i = 0; i < size; i++)
+            {
+                sum += arr1[i];
+            }
+            // середнє значення = сума/розмір
+            int middle = 0;
+            middle = sum / size;
+
+            int min = int.MaxValue; // Мінімальне значення
+            int max = int.MinValue; // Максимальне значення
+
+            // Знаходження мінімального та максимального елемента
+            for (int i = 0; i < size; i++)
+            {
+                int n = arr1[i];
+                if (n < min)
+                {
+                    min = n;
+                }
+                if (n > max)
+                {
+                    max = n;
+                }
+            }
+
+            // Вивід результатів
+            Console.Write("\nsum = {0}, mid = {1}, min = {2}, max = {3}", sum, middle, min, max);
+        }
+    }
+}
