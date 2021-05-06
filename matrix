@@ -1,0 +1,115 @@
+using System;
+
+namespace Kr4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // ініціалізація та задання розмірів масиву
+            int r = 9;
+            int c = 6;
+            int[,] mas = new int[r, c];
+            // масив для підрахування суми 
+            double[] summ = new double[c];
+
+            // для генерації рандомних чисел
+            Random rand = new Random();
+
+            // задання значень елементам масиву та вивід у консоль
+            for (int i = 0; i < r; i++)
+            {
+
+                for (int j = 0; j < c; j++)
+                {
+                    mas[i, j] = rand.Next(40, 90);
+                    Console.Write($"{mas[i, j]} \t");
+                }
+                Console.WriteLine();
+            }
+
+
+            for (int i = 0; i < c; i++)
+            {
+                for (int j = 0; j < r; j++)
+                {
+                    summ[i] += mas[j, i];    // Обрахування суми стовбців   
+                }
+                summ[i] = summ[i] / r; // призначення середнього значення стовбців елементам масиву summ
+            }
+
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+
+            for (int i = 0; i < c; i++)
+            {
+                Console.Write($"{summ[i]} \t"); // вивід значень масиву summ
+            }
+
+
+            int[,] change = new int[r, c]; // масив для тимчасового зберігання стовбця
+
+            // створення змінних для знайдення в массиві summ мінімального та максимального значення
+            double min = int.MaxValue; 
+            double max = int.MinValue;
+            // створення counterів для запису, якій самі стовбці мають бути переміщенні
+            int counter = 0;
+            int count_max = 0;
+            int count_min = 0;
+            for (int i = 0; i < c; i++) // знаходження найбільшого і найменшого елемента в масиві summ
+            {
+                double n = summ[i];
+                if (n < min)
+                {
+                    min = n;
+                }
+                if (n > max)
+                {
+                    max = n;
+                }
+            }
+            for (int i = 0; i < c; i++) // цикл для порівняння найбільшого і найменшого елемента з кожним елементом і запис, якщо є сходження
+            {
+                counter++;
+               if(summ[i] == min)
+                {
+                    count_min = counter;
+                }
+                if (summ[i] == max)
+                {
+                    count_max = counter;
+                }
+            }
+            count_min--; // так як масиви починаються з 0
+            count_max--; 
+
+            Console.Write("\n\nmin= {0}, max = {1}, min = {2}, max = {3}", min, max, count_min, count_max); // Вивід найбільших та найменших значень та їх позиції в масиві summ
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+
+            for (int i = 0; i < r; i++) // цикл для заміни стовбців
+            {
+                for (int j = 0; j < c; j++)
+                {
+                    change[i, 0] = mas[i, count_min];
+                    mas[i, count_min] = mas[i, count_max];
+                    mas[i, count_max] = change[i, 0];
+                   Console.Write($"{mas[i, j]} \t");
+                }
+                Console.WriteLine();
+            }
+
+            for (int i = 0; i < r; i++) // Вивід тимчасового масиву 
+            {
+                for (int j = 0; j < c; j++)
+                {
+                    Console.Write($"{change[i, j]} \t");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
